@@ -10,18 +10,15 @@ import UIKit
 
 class UserTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var ibImageView: UIImageView!
-    @IBOutlet weak var ibName: UILabel!
-    @IBOutlet weak var ibPhone: UILabel!
+    @IBOutlet weak private var ibImageView: UIImageView!
+    @IBOutlet weak private var ibName: UILabel!
+    @IBOutlet weak private var ibPhone: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func update(name: String, phone: String, image: UIImage) {

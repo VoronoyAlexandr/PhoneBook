@@ -16,7 +16,7 @@ struct User {
     var email: String
     var phone: String
     var image: UIImage?
-    
+
     init(firstName: String, secondName: String, email: String, phone: String, image: UIImage? = nil) {
         User.objectCounter += 1
         self.id = User.objectCounter
@@ -27,9 +27,8 @@ struct User {
         self.image = image
     }
 }
-
 extension User: Equatable {
-    static func ==(lhs: User, rhs: User) -> Bool {
+    static func == (lhs: User, rhs: User) -> Bool {
         return lhs.phone == rhs.phone
-}
+    }
 }

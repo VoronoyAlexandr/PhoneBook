@@ -16,6 +16,7 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak private var ibSecondName: UITextField!
     @IBOutlet weak private var ibPhone: UITextField!
     @IBOutlet weak private var ibEmail: UITextField!
+    private var newRegistration: Bool = false
     
     var user: User?
     
@@ -36,12 +37,20 @@ class UserDetailsViewController: UIViewController {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
     }
-    private func addObservers(){
+    private func addObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillHide, object: nil)
     }
     @IBAction private func userSaved(_ sender: Any) {
-        guard var editedUser = user else { return }
+        //        guard var editedUser = user else { return }
+        var editedUser: User
+        if let user = user {
+            editedUser = user
+        } else {
+            editedUser = User(firstName: "", secondName: "", email: "", phone: "")
+            newRegistration = true
+        }
+        
         let newFirstName = ibFirstName.text ?? ""
         guard !newFirstName.isEmpty else { return }
         editedUser.firstName = newFirstName
@@ -55,14 +64,13 @@ class UserDetailsViewController: UIViewController {
         guard !newEmail.isEmpty else { return }
         editedUser.email = newEmail
         
-        DataManager.instance.editUser(editedUser)
-        NotificationCenter.default.post(name: .UserEdited, object: nil)
+        newRegistration ? DataManager.instance.addUser(editedUser) : DataManager.instance.editUser(editedUser)
+        
         navigationController?.popViewController(animated: true)
     }
     @IBAction private func userDeleted(_ sender: Any) {
         guard let user = user else { return }
         DataManager.instance.deleteUser(user)
-        NotificationCenter.default.post(name : .UserDeleted, object: nil)
         navigationController?.popViewController(animated: true)
     }
     private func hideKeyboard() {

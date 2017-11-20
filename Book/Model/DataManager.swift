@@ -29,21 +29,23 @@ final class DataManager {
         users.append(User(firstName: "Vaughn", secondName: "Sprosson", email: "vsprosson8@skype.com", phone: "+27 945 651 1456", image: #imageLiteral(resourceName: "woman4_64x64")))
     }
     
-    func addUser(_ user: User){
+    func addUser(_ user: User) {
         users.append(user)
+        NotificationCenter.default.post(name: .UserEdited, object: nil)
     }
     
-    func deleteUser(_ user: User){
+    func deleteUser(_ user: User) {
         guard let index = users.index(of: user) else { return }
         users.remove(at: index)
-    }
+         NotificationCenter.default.post(name: .UserDeleted, object: nil)    }
     
-    func editUser(_ user: User){
+    func editUser(_ user: User) {
         var currentUsers = users
         guard !currentUsers.isEmpty else { return }
         guard let index = getIndex(of: user, in: users) else { return }
         currentUsers[index] = user
         users = currentUsers
+        NotificationCenter.default.post(name: .UserEdited, object: nil)
     }
     
     private func getIndex(of user: User, in usersArray: [User]) -> Int? {
