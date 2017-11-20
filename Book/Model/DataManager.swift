@@ -11,7 +11,7 @@ import Foundation
 final class DataManager {
     static let instance = DataManager()
     
-    private (set) var users: [User] = []
+    private (set) var users: [User] = [].sorted(by: { $0.secondName < $1.secondName })
     init() {
         self.generateUsers()
     }

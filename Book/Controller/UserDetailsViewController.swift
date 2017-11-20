@@ -45,8 +45,8 @@ class UserDetailsViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
     }
     @IBAction private func userSaved(_ sender: Any) {
         //        guard var editedUser = user else { return }

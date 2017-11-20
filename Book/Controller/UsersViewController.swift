@@ -95,7 +95,7 @@ extension UsersViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
-        let user = DataManager.instance.users[indexPath.row]
+        let user = getUser(for: indexPath)
         DataManager.instance.deleteUser(user)
     }
 }
