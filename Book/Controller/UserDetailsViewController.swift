@@ -16,6 +16,8 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak private var ibSecondName: UITextField!
     @IBOutlet weak private var ibPhone: UITextField!
     @IBOutlet weak private var ibEmail: UITextField!
+    @IBOutlet weak private var ibDelete: UIButton!
+    
     private var newRegistration: Bool = false
     
     var user: User?
@@ -32,6 +34,11 @@ class UserDetailsViewController: UIViewController {
         ibSecondName.delegate = self
         ibEmail.delegate = self
         ibPhone.delegate = self
+        if let user = user {
+            ibDelete.isHidden = false
+        } else {
+            ibDelete.isHidden = true
+        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -50,23 +57,40 @@ class UserDetailsViewController: UIViewController {
             editedUser = User(firstName: "", secondName: "", email: "", phone: "")
             newRegistration = true
         }
+       var message: String = ""
+        
+    
         
         let newFirstName = ibFirstName.text ?? ""
-        guard !newFirstName.isEmpty else { return }
+        if newFirstName.isEmpty {
+            message += "First Name Please \n"
+        }
         editedUser.firstName = newFirstName
         let newSecondName = ibSecondName.text ?? ""
-        guard !newSecondName.isEmpty else { return }
+        if newSecondName.isEmpty {
+            message += "Second Name Please \n"
+        }
         editedUser.secondName = newSecondName
         let newPhone = ibPhone.text ?? ""
-        guard !newPhone.isEmpty else { return }
         editedUser.phone = newPhone
         let newEmail = ibEmail.text ?? ""
-        guard !newEmail.isEmpty else { return }
         editedUser.email = newEmail
         
+        if !message.isEmpty {
+        let alert = UIAlertController(title: "Validation fileds",
+                                      message: message,
+                                      preferredStyle: .alert)
+        let ok = UIAlertAction(title: "Ok", style: .default) {
+            (UIAlertAction: UIAlertAction) in
+        }
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
+        
+        } else {
         newRegistration ? DataManager.instance.addUser(editedUser) : DataManager.instance.editUser(editedUser)
         
         navigationController?.popViewController(animated: true)
+        }
     }
     @IBAction private func userDeleted(_ sender: Any) {
         guard let user = user else { return }

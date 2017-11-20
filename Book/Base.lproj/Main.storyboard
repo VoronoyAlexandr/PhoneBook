@@ -255,6 +255,7 @@
                         <viewLayoutGuide key="safeArea" id="lNu-1d-dj8"/>
                     </view>
                     <connections>
+                        <outlet property="ibDelete" destination="4md-VK-69x" id="ZMC-Vl-eWS"/>
                         <outlet property="ibEmail" destination="3u2-2T-wQd" id="7mz-PY-2jL"/>
                         <outlet property="ibFirstName" destination="TCu-QQ-aia" id="o6R-KP-WOb"/>
                         <outlet property="ibImage" destination="LCZ-Ym-Qlv" id="nUv-Lm-GZR"/>
